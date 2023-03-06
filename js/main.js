@@ -4,6 +4,8 @@ const gridDom = document.getElementById('grid');
 const playDom = document.getElementById('play');
 const resetDom = document.getElementById('reset');
 
+
+
 playDom.addEventListener('click', function(){
   gridDom.innerHTML = "";
 
@@ -23,16 +25,22 @@ playDom.addEventListener('click', function(){
     const number = i
     console.log(number)
 
-    let bombNumber = bombRandomNumber(number);
+    
+
+    
 
     let currentElement = createSquare(number);
+    let numeriBomba = []
+    
       currentElement.addEventListener('click',
       function () {
-        
-      
-    
-        this.classList.toggle('clicked');
-        console.log(this.innerHTML)
+        if(currentElement.includes(numeriBomba)){
+            this.classList.toggle('bomb')
+        } else{
+            this.classList.toggle('clicked');
+         
+
+        }
       }
       );
       gridDom.append (currentElement);
@@ -44,37 +52,25 @@ playDom.addEventListener('click', function(){
 function createSquare(number){
   const currentElement = document.createElement('div');
   currentElement.classList.add('square');
-  if(currentElement == bombRandomNumber)
+
+  
   currentElement.innerHTML = number;
+
+  
   
 
 
   return currentElement;
 
 }
-// generazione  numero bomba casuali da 1 a 100
-function bombRandomNumber(min, max){
-    
-    const bombNumber = Math.floor((Math.random() * 100) + 1);
-    console.log(bombNumber);
-    return bombNumber
-}
-// generazione di 16 numeri bomba 
-function numeriUniqueBomba(bombRandomNumber, min, max){
-    let isValidNumber = false;
-    let bombRandomNumber;
-    for( let i = 1; i <= 16; i++){
 
-    }
-}
+function bombRandomNumber(){
+  for (let i = 1; i < 17; i++){
+    let bombNumber = Math.floor((Math.random() * 100) + 1);
+    return numeriBomba.push(bombNumber);
 
-function addBomb(bombNumber){
-    if(bombNumber == currentElement){
-        return bombNumber;
-    } else {
-        return currentElement;
-    }
-
+  }
+  
 }
 
 
