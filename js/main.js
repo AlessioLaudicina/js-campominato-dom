@@ -23,7 +23,7 @@ playDom.addEventListener('click', function(){
     const number = i
     console.log(number)
 
-    let bombNumber = bombRandomNumber();
+    let bombNumber = bombRandomNumber(number);
 
     let currentElement = createSquare(number);
       currentElement.addEventListener('click',
@@ -44,6 +44,7 @@ playDom.addEventListener('click', function(){
 function createSquare(number){
   const currentElement = document.createElement('div');
   currentElement.classList.add('square');
+  if(currentElement == bombRandomNumber)
   currentElement.innerHTML = number;
   
 
@@ -51,14 +52,29 @@ function createSquare(number){
   return currentElement;
 
 }
-
-function bombRandomNumber(){
-  for (let i = 1; i < 17; i++){
-    let bombNumber = Math.floor((Math.random() * 100) + 1);
+// generazione  numero bomba casuali da 1 a 100
+function bombRandomNumber(min, max){
+    
+    const bombNumber = Math.floor((Math.random() * 100) + 1);
     console.log(bombNumber);
     return bombNumber
+}
+// generazione di 16 numeri bomba 
+function numeriUniqueBomba(bombRandomNumber, min, max){
+    let isValidNumber = false;
+    let bombRandomNumber;
+    for( let i = 1; i <= 16; i++){
 
-  }
+    }
+}
+
+function addBomb(bombNumber){
+    if(bombNumber == currentElement){
+        return bombNumber;
+    } else {
+        return currentElement;
+    }
+
 }
 
 
