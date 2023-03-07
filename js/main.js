@@ -1,78 +1,137 @@
-const gridDom = document.getElementById('grid');
 
 
-const playDom = document.getElementById('play');
-const resetDom = document.getElementById('reset');
+  const playDom = document.getElementById('play')
+  const levelDom = document.getElementById('level');
 
+  const resetDom = document.getElementById('reset')
 
+  resetDom.addEventListener('click', function(){
 
-playDom.addEventListener('click', function(){
-  gridDom.innerHTML = "";
-
-})
-
-resetDom.addEventListener('click', function(){
-  gridDom.innerHTML = "";
-
-})
-
-
-playDom.addEventListener('click', function(){
-
-  for (let i = 1; i < 101; i++) {
-    
-
-    const number = i
-    console.log(number)
+    const gridDom = document.getElementById('grid');
+    gridDom.innerHTML = "";
 
     
+  })
 
+  
+  playDom.addEventListener('click', 
+  function(){
+    const level = levelDom.value;
+    createNewGame(level);
+
+  })
+
+  function createNewGame(level) {
+
+    let cells;
+    let cellsPerSide;
     
 
-    let currentElement = createSquare(number);
-    let numeriBomba = []
-    
-      currentElement.addEventListener('click',
-      function () {
-        if(currentElement.includes(numeriBomba)){
-            this.classList.toggle('bomb')
-        } else{
-            this.classList.toggle('clicked');
-         
+    const freeCell = [];
+    let gameOver = false;
+    const myScoreDom = document.getElementById('myscore')
 
-        }
-      }
-      );
-      gridDom.append (currentElement);
+
+    switch(level){
+        case "easy":
+            cells = 100;
+            break;
+
+            case "medium":
+            cells = 81;
+            break;
+
+            case "hard":
+            cells = 49;
+            break; 
     }
+
+
+    cellsPerSide = Math.sqrt(cells);
+
+    const bombs = generateBombList(16, cells);
+    console.log(bombs)
+
+    const gridDom = document.getElementById('grid');
+    gridDom.innerHTML = "";
+
+    for(let i = 1; i <= cells; i++){
+        const currentCell = generateGrid(cellsPerSide, i);
+        currentCell.addEventListener('click', function(){
+
+            if(!gameOver){
+                if(bombs.includes(i)){
+                    this.classList.toggle('bomb')
+                } else{
+                    this.classList.toggle('clicked')
+                    
+                }
     
-})
+                if (!freeCell.includes(i)){
+                    freeCell.push(i)
+                }
+
+            }
+
+           
+            myScoreDom.innerHTML = "Il tuo punteggio è: " + freeCell.length;
+        });
+
+        gridDom.append(currentCell);
+    }
 
 
-function createSquare(number){
-  const currentElement = document.createElement('div');
-  currentElement.classList.add('square');
+    
+}
 
-  
-  currentElement.innerHTML = number;
+function generateBombList (numberOfBombs, cellNumber){
+    const bombs = [];
 
-  
-  
+    for(let i = 0; i < numberOfBombs; i++){
+        bombs.push(generateRandomUniqueNumber(bombs, 1, cellNumber))
 
 
-  return currentElement;
+    }
+
+    return bombs;
 
 }
 
-function bombRandomNumber(){
-  for (let i = 1; i < 17; i++){
-    let bombNumber = Math.floor((Math.random() * 100) + 1);
-    return numeriBomba.push(bombNumber);
 
-  }
-  
+function generateRandomNumber(min, max){
+    const numeroCasuale = Math.floor(Math.random() * (max - min + 1)) + min;
+    return numeroCasuale
+}
+
+function generateRandomUniqueNumber(blacklist, min, max){
+    let valid = false;
+    let randomNumber;
+
+    while(!valid) {
+        randomNumber = generateRandomNumber(min, max);
+
+        if(!blacklist.includes(randomNumber)){
+            valid = true;
+        }
+
+    }
+
+    return randomNumber;
+
 }
 
 
 
+
+
+function generateGrid(cellsPerSide, number){
+    const cell = document.createElement ('div');
+    cell.classList.add('square');
+    cell.style.width = `calc(100% / ${cellsPerSide})`;
+    cell.style.height = `calc(100% / ${cellsPerSide})`;
+    cell.innerHTML = `<div class="number-square">${number}</div>`;
+
+    return cell;
+
+}
 

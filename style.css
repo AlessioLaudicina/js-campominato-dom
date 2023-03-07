@@ -46,6 +46,8 @@ main{
     background-color: red;
 }
 
+
+
 footer{
     height: 20px;
     margin: auto;
@@ -53,6 +55,4 @@ footer{
     display: flex;
     justify-content: space-around;
 }
-
-
 
