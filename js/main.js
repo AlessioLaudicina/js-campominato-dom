@@ -62,6 +62,7 @@
             if(!gameOver){
                 if(bombs.includes(i)){
                     this.classList.toggle('bomb')
+                    gameOver = true;
                 } else{
                     this.classList.toggle('clicked')
                     
